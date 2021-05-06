@@ -6,11 +6,6 @@
 
 ;;; Code:
 
-(use-package pretty-hydra
-  :ensure t)
-(use-package all-the-icons
-  :ensure t)
-
 (defun icons-displayable-p ()
   "Return non-nil if `all-the-icons' is displayable."
   (and (display-graphic-p)
