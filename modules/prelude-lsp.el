@@ -208,16 +208,7 @@
              (user-error "LSP:: specify `:file' property to enable"))
 
            (setq buffer-file-name file-name)
-           (pcase centaur-lsp
-             ('eglot
-              (and (fboundp 'eglot-ensure) (eglot-ensure)))
-             ('lsp-mode
-              (and (fboundp 'lsp-deferred) (lsp-deferred)))
-             (_ (user-error "LSP:: invalid `centaur-lsp' type")))))
-       (put ',intern-pre 'function-documentation
-            (format "Enable `%s' in the buffer of org source block (%s)."
-                    centaur-lsp (upcase ,lang)))
-
+           (and (fboundp 'lsp-deferred) (lsp-deferred))))
        (if (fboundp ',edit-pre)
            (advice-add ',edit-pre :after ',intern-pre)
          (progn
