@@ -40,10 +40,8 @@
 ;;; Uncomment the modules you'd like to use and restart Prelude afterwards
 
 ;;; General productivity tools
-(setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
-                         ("melpa" . "http://elpa.emacs-china.org/melpa/")))
-
 (require 'prelude-dashboard)
+(require 'prelude-treemacs)
 ;; (require 'prelude-ido) ;; Supercharges Emacs completion for C-x C-f and more
 (require 'prelude-ivy) ;; A mighty modern alternative to ido
 ;; (require 'prelude-selectrum) ;; A powerful, yet simple, alternative to ivy

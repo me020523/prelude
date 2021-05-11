@@ -44,6 +44,7 @@
          (lsp-mode . (lambda ()
                        ;; Integrate `which-key'
                        (lsp-enable-which-key-integration)
+                       (whitespace-toggle-options '(tabs))
 
                        ;; Format and organize imports
                        (add-hook 'before-save-hook #'lsp-format-buffer t t)
@@ -188,6 +189,10 @@
     :ensure t
     :init (setq lsp-sourcekit-executable
                 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp")))
+
+;; Java support
+(use-package lsp-java
+  :ensure t)
 
 ;; Julia support
 (use-package lsp-julia
