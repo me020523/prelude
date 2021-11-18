@@ -31,6 +31,8 @@
 ;;; Code:
 
 (require 'org)
+(prelude-require-package 'org-bullets)
+
 
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
@@ -50,6 +52,7 @@
     (define-key newmap (kbd "C-a") 'org-beginning-of-line)
     (make-local-variable 'minor-mode-overriding-map-alist)
     (push `(prelude-mode . ,newmap) minor-mode-overriding-map-alist))
+  (org-bullets-mode 1)
 )
 
 (setq prelude-org-mode-hook 'prelude-org-mode-defaults)

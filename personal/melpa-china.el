@@ -1,2 +1,2 @@
-(setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
-                         ("melpa" . "http://elpa.emacs-china.org/melpa/")))
+(setq url-proxy-services '(("https" . "127.0.0.1:1087")
+                           ("http" . "127.0.0.1:1087")))
