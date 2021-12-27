@@ -30,9 +30,12 @@
 
 ;;; Code:
 
-(require 'org)
 (prelude-require-package 'org-bullets)
 (prelude-require-package 'org-roam)
+
+(require 'org)
+(require 'org-roam)
+
 ;;(prelude-require-package 'org-roam-ui)
 ;;(prelude-require-package 'org-roam-bibtex)
 
@@ -79,6 +82,29 @@
          "* %?"
          :target (file+head "%<%Y-%m-%d>.org"
                             "#+title: %<%Y-%m-%d>\n"))))
+
+;; org agenda & org roam
+;; https://magnus.therning.org/2021-03-14-keeping-todo-items-in-org-roam.html
+
+(defun prelude-org-roam-todo-files ()
+  "Return a list of note files containing todo tag."
+  (seq-uniq
+   (seq-map
+    (lambda (node) (org-roam-node-file node))
+    (cl-remove-if-not
+     (lambda (node) (string-equal "TODO" (org-roam-node-todo node)))
+     (org-roam-node-list)))))
+
+(defun prelude-org-roam-update-todo-files (&rest _)
+  "Update the value of `org-agenda-files'."
+  (setq org-agenda-files (prelude-org-roam-todo-files)))
+
+;; To ensure that the list of files with TODO items is kept up to date
+;; when I open I also wrap org-agenda in an advice so
+;; roam-extra:update-todo-files is called prior to the agenda being
+;; opened.
+(advice-add 'org-agenda :before #'prelude-org-roam-update-todo-files)
+
 (defun prelude-org-roam()
   (add-hook 'after-save-hook (lambda ()
                                (org-roam-db-sync))))
