@@ -69,7 +69,7 @@
      (plantuml . t))))
 
 ;;org roam
-(setq org-roam-directory "/Users/shuaibincheng/Documents/notes")
+(setq org-roam-directory (expand-file-name "~/Documents/notes"))
 (if (not (file-directory-p (expand-file-name "daily/" org-roam-directory)))
     (make-directory (expand-file-name "daily/" org-roam-directory)))
 (setq org-roam-dailies-directory "daily/")
