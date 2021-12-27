@@ -31,3 +31,5 @@ var/
 .cache/
 .lsp-session*
 .dap-breakpoints
+org-roam.db
+.org-id-locations

@@ -38,16 +38,12 @@
 
 ;; accessing a package repo over https on Windows is a no go, so we
 ;; fallback to http there
+
 (if (eq system-type 'windows-nt)
-    (progn
-      (add-to-list 'package-archives
-                 '("melpa" . "http://elpa.emacs-china.org/melpa/") t)
-      (add-to-list 'package-archives
-                 '("gnu" . "http://elpa.emacs-china.org/gnu/") t))
-  (progn (add-to-list 'package-archives
-               '("melpa" . "https://elpa.emacs-china.org/melpa/") t)
+    (add-to-list 'package-archives
+                 '("melpa" . "http://melpa.org/packages/") t)
   (add-to-list 'package-archives
-                 '("gnu" . "https://elpa.emacs-china.org/gnu/") t)))
+               '("melpa" . "https://melpa.org/packages/") t))
 
 ;; load the pinned packages
 (let ((prelude-pinned-packages-file (expand-file-name "prelude-pinned-packages.el" prelude-dir)))

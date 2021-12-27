@@ -32,6 +32,9 @@
 
 (require 'org)
 (prelude-require-package 'org-bullets)
+(prelude-require-package 'org-roam)
+;;(prelude-require-package 'org-roam-ui)
+;;(prelude-require-package 'org-roam-bibtex)
 
 
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
@@ -53,7 +56,32 @@
     (make-local-variable 'minor-mode-overriding-map-alist)
     (push `(prelude-mode . ,newmap) minor-mode-overriding-map-alist))
   (org-bullets-mode 1)
-)
+  (prelude-org-babel)
+  (prelude-org-roam))
+
+;;org babel
+(defun prelude-org-babel ()
+  (setq org-plantuml-jar-path
+        (expand-file-name "~/.emacs.d/plantuml.jar"))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(;; plantuml
+     (plantuml . t))))
+
+;;org roam
+(setq org-roam-directory "/Users/shuaibincheng/Documents/notes")
+(if (not (file-directory-p (expand-file-name "daily/" org-roam-directory)))
+    (make-directory (expand-file-name "daily/" org-roam-directory)))
+(setq org-roam-dailies-directory "daily/")
+(setq org-roam-file-extensions '("org")
+      org-roam-dailies-capture-templates
+      '(("d" "default" entry
+         "* %?"
+         :target (file+head "%<%Y-%m-%d>.org"
+                            "#+title: %<%Y-%m-%d>\n"))))
+(defun prelude-org-roam()
+  (add-hook 'after-save-hook (lambda ()
+                               (org-roam-db-sync))))
 
 (setq prelude-org-mode-hook 'prelude-org-mode-defaults)
 
