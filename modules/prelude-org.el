@@ -32,9 +32,13 @@
 
 (prelude-require-package 'org-bullets)
 (prelude-require-package 'org-roam)
+(prelude-require-package 'org2ctex)
+(prelude-require-package 'org-contrib)
 
 (require 'org)
 (require 'org-roam)
+(require 'org2ctex)
+(require 'ox-taskjuggler)
 
 ;;(prelude-require-package 'org-roam-ui)
 ;;(prelude-require-package 'org-roam-bibtex)
@@ -43,9 +47,9 @@
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
 ;; a few useful global keybindings for org-mode
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-switchb)
+;;(global-set-key "\C-cl" 'org-store-link)
+;;(global-set-key "\C-ca" 'org-agenda)
+;;(global-set-key "\C-cb" 'org-switchb)
 
 (setq org-log-done t)
 
@@ -58,9 +62,11 @@
     (define-key newmap (kbd "C-a") 'org-beginning-of-line)
     (make-local-variable 'minor-mode-overriding-map-alist)
     (push `(prelude-mode . ,newmap) minor-mode-overriding-map-alist))
-  (org-bullets-mode 1)
   (prelude-org-babel)
-  (prelude-org-roam))
+  (prelude-org-roam)
+  (org2ctex-toggle t)
+  (org-bullets-mode 1)
+  (org-indent-mode 1))
 
 ;;org babel
 (defun prelude-org-babel ()
@@ -69,7 +75,13 @@
   (org-babel-do-load-languages
    'org-babel-load-languages
    '(;; plantuml
-     (plantuml . t))))
+     (plantuml . t)))
+  (add-to-list 'org-babel-default-header-args:plantuml
+               `(:cmdline . ,(concat "-charset utf-8"
+                                    " "
+                                    "-config"
+                                    " "
+                                    (expand-file-name "~/.emacs.d/pml/default.puml")))))
 
 ;;org roam
 (setq org-roam-directory (expand-file-name "~/Documents/notes"))
@@ -108,6 +120,62 @@
 (defun prelude-org-roam()
   (add-hook 'after-save-hook (lambda ()
                                (org-roam-db-sync))))
+
+;;ox-taskjuggler
+(setq org-taskjuggler-default-reports
+  '("textreport report \"Plan\" {
+  formats html
+  header '== %title =='
+  center -8<-
+    [#Plan Plan] | [#Resource_Allocation Resource Allocation]
+    ----
+    === Plan ===
+    <[report id=\"plan\"]>
+    ----
+    === Resource Allocation ===
+    <[report id=\"resourceGraph\"]>
+  ->8-
+}
+
+# A traditional Gantt chart with a project overview.
+taskreport plan \"\" {
+  headline \"Project Plan\"
+  columns bsi, name {width 350}, start, end, effort, chart {scale week width 800}
+  loadunit shortauto
+  hideresource 1
+}
+
+# A graph showing resource allocation. It identifies whether each
+# resource is under- or over-allocated for.
+resourcereport resourceGraph \"\" {
+  headline \"Resource Allocation Graph\"
+  columns no, name, effort, annualleave, complete, weekly {width 700}
+  loadunit shortauto
+  hidetask ~(isleaf() & isleaf_())
+  sorttasks plan.start.up
+}")
+)
+
+;; (setq org-taskjuggler-default-global-properties
+;; "
+;; shift s40 \"Part time shift\" {
+;;   workinghours wed, thu, fri off
+;; }
+
+;; leaves holiday \"National Day\" 2021-10-01 +5d,
+;;        holiday \"Dragon Boat Festival\" 2021-06-12 +3d,
+;;        holiday \"Mid-Autumn Festival\" 2021-09-19 +2d
+;; ")
+(setenv "LC_ALL" "zh_CN.UTF-8")
+(setenv "LANG" "zh_CN.UTF-8")
+(setenv "LANGUAGE" "zh_CN.UTF-8")
+(setenv "LC_COLLATE" "zh_CN.UTF-8")
+(setenv "LC_CTYPE" "zh_CN.UTF-8")
+(setenv "LC_MESSAGES" "zh_CN.UTF-8")
+(setenv "LC_MONETARY" "zh_CN.UTF-8")
+(setenv "LC_NUMERIC" "zh_CN.UTF-8")
+(setenv "LC_TIME" "zh_CN.UTF-8")
+;; end
 
 (setq prelude-org-mode-hook 'prelude-org-mode-defaults)
 
