@@ -35,13 +35,14 @@
 
 (require 'electric)
 (require 'prelude-programming)
+(prelude-require-package 'conda)
 
 ;; Code navigation, documentation lookup and completion for Python
-(prelude-require-package 'anaconda-mode)
+;;(prelude-require-package 'anaconda-mode)
 
-(when (boundp 'company-backends)
-  (prelude-require-package 'company-anaconda)
-  (add-to-list 'company-backends 'company-anaconda))
+;; (when (boundp 'company-backends)
+;;   (prelude-require-package 'company-anaconda)
+;;   (add-to-list 'company-backends 'company-anaconda))
 
 (defcustom prelude-python-mode-set-encoding-automatically nil
   "Non-nil values enable auto insertion of '# coding: utf-8' on python buffers."
