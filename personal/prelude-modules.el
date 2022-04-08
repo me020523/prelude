@@ -47,7 +47,7 @@
 ;; (require 'prelude-selectrum) ;; A powerful, yet simple, alternative to ivy
 ;; (require 'prelude-helm) ;; Interface for narrowing and search
 ;; (require 'prelude-helm-everywhere) ;; Enable Helm everywhere
-(require 'prelude-company)
+;;(require 'prelude-company)
 ;; (require 'prelude-key-chord) ;; Binds useful features to key combinations
 
 ;;; Vim emulation
@@ -59,6 +59,7 @@
 ;;
 ;; Org-mode helps you keep TODO lists, notes and more.
 (require 'prelude-org)
+(require 'prelude-dired)
 
 ;;; Programming languages support
 ;;
@@ -74,7 +75,6 @@
 (require 'prelude-emacs-lisp)
 ;; (require 'prelude-erlang)
 ;; (require 'prelude-elixir)
-(require 'prelude-go)
 ;; (require 'prelude-haskell)
 (require 'prelude-js)
 ;; (require 'prelude-latex)
@@ -83,7 +83,7 @@
 ;; (require 'prelude-lua)
 ;; (require 'prelude-ocaml)
 (require 'prelude-perl)
-;; (require 'prelude-python)
+(require 'prelude-python)
 ;; (require 'prelude-racket)
 ;; (require 'prelude-ruby)
 (require 'prelude-rust)
@@ -95,6 +95,7 @@
 (require 'prelude-web) ;; Emacs mode for web templates
 (require 'prelude-xml)
 (require 'prelude-yaml)
+(require 'prelude-go)
 
 ;;; Misc
 (require 'prelude-erc) ;; A popular Emacs IRC client (useful if you're still into Freenode)

@@ -30,6 +30,8 @@
 
 ;;; Code:
 
+(require 'copilot)
+
 (defun prelude-local-comment-auto-fill ()
   (set (make-local-variable 'comment-auto-fill-only-comments) t))
 
@@ -69,13 +71,17 @@
     (diminish 'guru-mode))
   (smartparens-mode +1)
   (prelude-enable-whitespace)
-  (prelude-local-comment-auto-fill))
+  (prelude-local-comment-auto-fill)
+  (copilot-mode))
+
+(with-eval-after-load 'prog-mode
+  (define-key prog-mode-map (kbd "C-c C-p <tab>") 'copilot-complete)
+  (define-key prog-mode-map (kbd "C-c C-p <return>") 'copilot-accept-completion))
 
 (setq prelude-prog-mode-hook 'prelude-prog-mode-defaults)
 
 (add-hook 'prog-mode-hook (lambda ()
                             (run-hooks 'prelude-prog-mode-hook)))
-
 ;; enable on-the-fly syntax checking
 (if (fboundp 'global-flycheck-mode)
     (global-flycheck-mode +1)

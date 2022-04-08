@@ -30,10 +30,7 @@
 
 (require 'prelude-programming)
 
-(prelude-require-packages '(go-mode
-                            company-go
-                            go-eldoc
-                            go-projectile
+(prelude-require-packages '(go-projectile
                             gotest))
 
 (require 'go-projectile)
@@ -60,12 +57,6 @@
 
     ;; gofmt on save
     (add-hook 'before-save-hook 'gofmt-before-save nil t)
-
-    ;; Company mode settings
-    (set (make-local-variable 'company-backends) '(company-go))
-
-    ;; El-doc for Go
-    (go-eldoc-setup)
 
     ;; CamelCase aware editing operations
     (subword-mode +1))
